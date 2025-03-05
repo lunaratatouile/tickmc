@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time ↔ Tick</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #121212;
+            color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1, h2 {
+            color: #ffffff;
+            font-weight: 600;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+        .container {
+            background: #1e1e1e;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 10px;
+            background-color: #333333;
+            color: #f5f5f5;
+            font-size: 1rem;
+        }
+        input::placeholder {
+            color: #888;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background-color: #007AFF;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        button:hover {
+            background-color: #005BBB;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #2c2c2c;
+            border-radius: 10px;
+            color: #cccccc;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Time ↔ Tick</h1>
+
+    <div class="container">
+        <h2>Convert time → Tick</h2>
+        <label for="hours">Hours :</label>
+        <input type="number" id="hours" placeholder="0" min="0">
+        <label for="minutes">Minutes :</label>
+        <input type="number" id="minutes" placeholder="0" min="0">
+        <label for="seconds">Seconds :</label>
+        <input type="number" id="seconds" placeholder="0" min="0">
+        <button onclick="convertToTicks()">Convert to Tick</button>
+        <div id="ticksResult" class="result"></div>
+    </div>
+
+    <div class="container">
+        <h2>Tick → Time</h2>
+        <label for="ticks">Tick :</label>
+        <input type="number" id="ticks" placeholder="0" min="0">
+        <button onclick="convertToTime()">Convert to Time</button>
+        <div id="timeResult" class="result"></div>
+    </div>
+
+    <script>
+        const TICKS_PER_SECOND = 20;
+
+        function convertToTicks() {
+            const hours = parseInt(document.getElementById("hours").value) || 0;
+            const minutes = parseInt(document.getElementById("minutes").value) || 0;
+            const seconds = parseInt(document.getElementById("seconds").value) || 0;
+
+            const totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
+            const ticks = totalSeconds * TICKS_PER_SECOND;
+
+            document.getElementById("ticksResult").textContent = `Result : ${ticks} tick`;
+        }
+
+        function convertToTime() {
+            const ticks = parseInt(document.getElementById("ticks").value) || 0;
+
+            const totalSeconds = Math.floor(ticks / TICKS_PER_SECOND);
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            document.getElementById("timeResult").textContent = 
+                `Result : ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+        }
+    </script>
+</body>
+</html>
